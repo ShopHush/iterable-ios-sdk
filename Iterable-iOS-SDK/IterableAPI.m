@@ -757,13 +757,11 @@ NSCharacterSet* encodedCharacterSet = nil;
 // documented in IterableAPI.h
 - (void)trackPushOpen:(NSNumber *)campaignId templateId:(NSNumber *)templateId messageId:(NSString *)messageId appAlreadyRunning:(BOOL)appAlreadyRunning dataFields:(NSDictionary *)dataFields onSuccess:(OnSuccessHandler)onSuccess onFailure:(OnFailureHandler)onFailure
 {
-    NSMutableDictionary *reqDataFields;
-    if (dataFields) {
-        reqDataFields = [dataFields mutableCopy];
-    } else {
-        reqDataFields = [NSMutableDictionary dictionary];
-    }
+    NSMutableDictionary *reqDataFields = [NSMutableDictionary dictionary];
     reqDataFields[@"appAlreadyRunning"] = @(appAlreadyRunning);
+    if (dataFields) {
+        [reqDataFields addEntriesFromDictionary: [dataFields copy]];
+    }
     
     NSDictionary *args;
     
